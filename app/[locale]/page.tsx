@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Monitor, Wrench, BarChart3, Users, TrendingUp, Shield, Zap, Award } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
@@ -47,14 +47,14 @@ export default function Home() {
       );
       alert('문의가 성공적으로 전송되었습니다!');
       setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
+    } catch {
       alert('문의 전송에 실패했습니다. 다시 시도해주세요.');
     }
     setIsSubmitting(false);
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-gray-100 dark:from-gray-900 dark:to-blue-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 dark:from-gray-900 dark:to-blue-900">
       <LanguageSwitcher />
       {/* 히어로 섹션 */}
       <section className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8">
@@ -263,7 +263,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-pointer"
               >
-                <div className="h-48 bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                <div className="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
                   <span className="text-white text-6xl font-bold">{index + 1}</span>
                 </div>
                 <div className="p-6">

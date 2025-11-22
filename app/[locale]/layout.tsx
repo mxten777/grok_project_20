@@ -49,7 +49,7 @@ export default async function RootLayout({
   let messages;
   try {
     messages = await getMessages();
-  } catch (error) {
+  } catch {
     notFound();
   }
 
