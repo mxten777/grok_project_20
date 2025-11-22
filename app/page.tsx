@@ -129,7 +129,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="bg-gray-100 dark:bg-gray-700 p-6 rounded-xl"
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl"
             >
               <h4 className="font-semibold mb-4 text-gray-900 dark:text-white flex items-center">
                 <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
