@@ -1,28 +1,28 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Monitor, Wrench, BarChart3, Users, TrendingUp, Shield, Zap, Award } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 
+// 동적 import로 코드 스플리팅 적용
+const PerformanceChart = lazy(() => import('../../components/PerformanceChart'));
+const ContactForm = lazy(() => import('../../components/ContactForm'));
+
 export default function Home() {
   const t = useTranslations();
   const [counters, setCounters] = useState({ factories: 0, uptime: 0, efficiency: 0 });
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 차트 데이터
-  const chartData = [
+  // 차트 데이터 - useMemo로 메모이제이션
+  const chartData = useMemo(() => [
     { name: '1월', 생산량: 4000, 효율성: 2400 },
     { name: '2월', 생산량: 3000, 효율성: 1398 },
     { name: '3월', 생산량: 2000, 효율성: 9800 },
     { name: '4월', 생산량: 2780, 효율성: 3908 },
     { name: '5월', 생산량: 1890, 효율성: 4800 },
     { name: '6월', 생산량: 2390, 효율성: 3800 },
-  ];
+  ], []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,26 +35,10 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      await emailjs.send(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        formData,
-        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
-      );
-      alert('문의가 성공적으로 전송되었습니다!');
-      setFormData({ name: '', email: '', message: '' });
-    } catch {
-      alert('문의 전송에 실패했습니다. 다시 시도해주세요.');
-    }
-    setIsSubmitting(false);
-  };
+
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 dark:from-gray-900 dark:to-blue-900">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-gray-100 dark:from-gray-900 dark:to-blue-900">
       <LanguageSwitcher />
       {/* 히어로 섹션 */}
       <section className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8">
@@ -154,16 +138,11 @@ export default function Home() {
                 <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
                 {t('services.chart')}
               </h4>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="생산량" fill="#3b82f6" />
-                  <Bar dataKey="효율성" fill="#10b981" />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="h-[200px]">
+                <Suspense fallback={<div className="h-full flex items-center justify-center text-gray-500">차트 로딩 중...</div>}>
+                  <PerformanceChart data={chartData} />
+                </Suspense>
+              </div>
             </motion.div>
           </div>
           {/* 카운터 */}
@@ -263,7 +242,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden cursor-pointer"
               >
-                <div className="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                <div className="h-48 bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center">
                   <span className="text-white text-6xl font-bold">{index + 1}</span>
                 </div>
                 <div className="p-6">
@@ -313,62 +292,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 문의 섹션 */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-800">
-        <div className="max-w-3xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8"
-          >
-            {t('contact.title')}
-          </motion.h2>
-          <motion.form
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('contact.name')}</label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('contact.email')}</label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('contact.message')}</label>
-              <textarea
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                rows={4}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 rounded-lg font-semibold transition-colors"
-            >
-              {isSubmitting ? t('contact.sending') : t('contact.cta')}
-            </button>
-          </motion.form>
-        </div>
-      </section>
+      {/* 문의하기 */}
+      <Suspense fallback={<div className="py-20 bg-gray-50 dark:bg-gray-900 flex items-center justify-center">폼 로딩 중...</div>}>
+        <ContactForm 
+          translations={{
+            contact: t('contact.title'),
+            name: t('contact.name'),
+            email: t('contact.email'),
+            message: t('contact.message'),
+            send: t('contact.cta')
+          }}
+        />
+      </Suspense>
 
       {/* 푸터 */}
       <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
