@@ -40,9 +40,12 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   let messages;
   try {
     messages = await getMessages();
@@ -51,7 +54,7 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="ko">
+    <html lang={locale}>
       <body
         className={`${inter.variable} ${robotoMono.variable} antialiased`}
       >

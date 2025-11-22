@@ -6,7 +6,7 @@ import emailjs from '@emailjs/browser';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { Monitor, Wrench, BarChart3, Users, TrendingUp, Shield, Zap, Award } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import LanguageSwitcher from '../components/LanguageSwitcher';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
 
 export default function Home() {
   const t = useTranslations();
@@ -108,7 +108,7 @@ export default function Home() {
                 </div>
                 <div className="bg-yellow-100 dark:bg-yellow-900 p-4 rounded-lg">
                   <h3 className="font-semibold text-yellow-800 dark:text-yellow-200">데이터 분석</h3>
-                  <p class="text-sm text-yellow-600 dark:text-yellow-300">생산 효율성 향상을 위한 인사이트</p>
+                  <p className="text-sm text-yellow-600 dark:text-yellow-300">생산 효율성 향상을 위한 인사이트</p>
                 </div>
               </div>
             </div>

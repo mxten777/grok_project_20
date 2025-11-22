@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Realize the Future of Smart Factories",
+    "subtitle": "Maximize productivity with Mansong System's factory monitoring solutions and strengthen competitiveness with data-driven decision making.",
+    "cta1": "Free Demo Request",
+    "cta2": "Learn More"
+  },
+  "services": {
+    "title": "Our Solutions",
+    "platform": {
+      "title": "Integrated Monitoring Platform",
+      "desc": "Monitor all production equipment from a single dashboard and make optimal operational decisions based on real-time data.",
+      "features": [
+        "Real-time production tracking",
+        "Equipment status monitoring",
+        "Quality management automation",
+        "Energy usage optimization"
+      ]
+    },
+    "chart": "Production Data Visualization",
+    "cta": "View More Solutions"
+  },
+  "counters": {
+    "factories": "Connected Factories",
+    "uptime": "Average Uptime",
+    "efficiency": "Efficiency Improvement"
+  },
+  "cases": {
+    "title": "Customer Cases",
+    "case1": {
+      "title": "Automotive Parts Manufacturer A Co.",
+      "desc": "20% improvement in production efficiency, 30% reduction in downtime"
+    },
+    "case2": {
+      "title": "Electronics Manufacturer B Co.",
+      "desc": "15% improvement in defect rate, cost reduction effect"
+    },
+    "case3": {
+      "title": "Chemical Plant C Co.",
+      "desc": "Prevention of safety accidents, real-time monitoring implementation"
+    }
+  },
+  "newsletter": {
+    "title": "Get the Latest Smart Factory Trends",
+    "desc": "Receive industry innovation news and solution updates via email.",
+    "placeholder": "Email Address",
+    "cta": "Subscribe"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "cta": "Send Message",
+    "sending": "Sending..."
+  },
+  "footer": {
+    "company": "Mansong System Co., Ltd.",
+    "desc": "Smart Factory Solution Specialist",
+    "services": "Services",
+    "about": "Company",
+    "contact": "Contact",
+    "cta": "Contact Us",
+    "copyright": "© 2025 Mansong System Co., Ltd. All rights reserved."
+  }
+}
