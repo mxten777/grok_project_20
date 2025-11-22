@@ -30,7 +30,7 @@ const ContactForm = memo(({ translations }: ContactFormProps) => {
       await emailjs.send(
         'YOUR_SERVICE_ID',
         'YOUR_TEMPLATE_ID',
-        formData,
+        formData as unknown as Record<string, unknown>,
         'YOUR_PUBLIC_KEY'
       );
       alert('문의가 성공적으로 전송되었습니다!');
